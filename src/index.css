@@ -48,6 +48,10 @@ button:focus {
   outline: solid #fcba03 3px;
 }
 
+.show-menu--btn {
+  margin-top: 1em;
+}
+
 /* Start screen */
 
 .start-screen {
@@ -56,7 +60,7 @@ button:focus {
   align-content: center;
   justify-content: center;
   height: 100vh;
-  padding: 2em;
+  padding: 2 .75em;
   background: #e6f0f7;
   position: relative;
   overflow: hidden;
@@ -85,7 +89,33 @@ button:focus {
 
 .start-screen--description {
   font-size: 1.25em;
-  margin-bottom: 1.5em;
+  margin-bottom: 2em;
+}
+
+.start-screen--form {
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 1em;
+  margin-bottom: 2em;
+  justify-content: center;
+}
+
+.start-screen--form-label {
+  margin: .5em;
+  text-align: right;
+}
+
+.start-screen--form-select {
+  cursor: pointer;
+  border: none;
+  border-radius: .5em;
+  padding: .25em;
+  width: auto;
+}
+
+.start-screen--form-select:focus {
+  outline: solid #fcba03 3px;
 }
 
 /* Game container */
@@ -95,7 +125,7 @@ button:focus {
   flex-direction: column;
   align-content: center;
   justify-content: center;
-  padding: 2em;
+  padding: 2em .75em;
   background: #e6f0f7;
   position: relative;
 }
@@ -129,7 +159,7 @@ button:focus {
   border-radius: 1em;
 }
 
-label {
+.question--label {
   padding: .3em 1.15em;
   display: inline-block;
   border-radius: .5em;
@@ -138,20 +168,20 @@ label {
   margin-top: 1em;
 }
 
-label:hover {
+.question--label:hover {
   cursor: pointer;
 }
 
-input:focus + label {
+input:focus + .question--label {
   outline: solid #fcba03 3px;
 }
 
-input + label {
+input + .question--label {
   border: solid 3px #010361;
   transition: 150ms;
 }
 
-input:checked + label {
+input:checked + .question--label {
   border: solid 3px #c9c5fa;
   background: #c9c5fa;
 }
@@ -167,37 +197,57 @@ input[type = "radio"] {
   width: 0
 }
 
-.finishedQuiz + label {
+.finished-quiz + .question--label {
   opacity: .6
 }
 
-.correct + label {
+.correct + .question--label {
   border: solid 3px #8cfa5c;
   background: #8cfa5c;
   opacity: 1;
 }
 
-.correct:checked + label {
+.correct:checked + .question--label {
   border: solid 3px #8cfa5c;
   background: #8cfa5c;
   opacity: 1
 }
 
-.incorrect:checked + label {
+.incorrect:checked + .question--label {
   border: solid #ffa29c 3px;
   background: #ffa29c;
 }
 
-.endMsg {
+.end-msg {
   font-size: 1.25em;
   text-align: center;
   margin-bottom: 0;
 }
 
-.endMsgWarning {
+.end-msg-warning {
   color: red;
 }
 
-.endGameBtn {
+.end-game--btn {
   margin-top: 1.25em;
+}
+
+/* Media query */
+
+@media (min-width: 600px) {
+  .start-screen--form {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 1em;
+    align-items: left;
+    margin-bottom: 2em;
+  }
+
+  .start-screen--form-label {
+    margin-left: 1em;
+  }
+
+  .start-screen--form-select {
+    margin-right: 1em;
+  }
 }
