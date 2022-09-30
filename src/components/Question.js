@@ -23,7 +23,7 @@ export default function Question(props) {
     }
     
     const shuffledAnswersElements = shuffledAnswers.map(answer => {
-        let isChecked = props.checked(props.question, answer)
+        let isChecked = props.isChecked(props.question, answer)
         
         return (
             <li key={answer}>
@@ -36,7 +36,7 @@ export default function Question(props) {
                     required
                     checked={isChecked}
                 />
-                <label htmlFor={props.question + answer}>{answer}</label>
+                <label htmlFor={props.question + answer} className="question--label">{answer}</label>
             </li>
         )
     })

@@ -1,14 +1,16 @@
 import React from "react"
 import Question from "./Question"
+import {Context} from "../Context"
 
 export default function Game() {
+    const {api, changeStart} = React.useContext(Context)
     
     const [questions, setQuestions] = React.useState([])
     const [formData, setFormData] = React.useState({})
     const [newGame, setNewGame] = React.useState(false)
     
     function getQuestions() {
-        fetch("https://opentdb.com/api.php?amount=10")
+        fetch(api)
             .then(response => response.json())
             .then(data => {
                 data = decodeHTMLEntities(data)
@@ -91,12 +93,12 @@ export default function Game() {
                 correctAnswer={question.correct_answer}
                 incorrectAnswers={question.incorrect_answers}
                 handleChange={handleChange}
-                checked={checked}
+                isChecked={isChecked}
             />
         )
     })
     
-    function checked(name, answer) {
+    function isChecked(name, answer) {
         let check = false
         if(formData[name] === answer) {
             check = true
@@ -127,7 +129,7 @@ export default function Game() {
             }
             document.querySelectorAll("input").forEach(input => {
                 input.disabled = true
-                input.classList.add("finishedQuiz")
+                input.classList.add("finished-quiz")
             })
             setShowMsg(true)
             setShowStats(true)
@@ -140,6 +142,8 @@ export default function Game() {
     
     function resetGame(event) {
         event.preventDefault()
+        setFormData({})
+        setQuestions([])
         getQuestions()
         getFormData()
         setNewGame(false)
@@ -153,21 +157,25 @@ export default function Game() {
         <form className="game-container">
             {questionsElements}
             {showMsg && (showStats ?
-                <p className="endMsg">
+                <p className="end-msg">
                     You scored {correctAnswersNum}/{questions.length} correct answers
                 </p> :
-                <p className="endMsg endMsgWarning">
+                <p className="end-msg end-msg-warning">
                     Please complete all questions!
                 </p>)
             }
             {questions.length > 0 &&
-                <button className="endGameBtn" 
-                    onClick={newGame ?
-                    resetGame : 
-                    checkAnswers}
-                >
-                    {newGame ? "Play again" : "Check answers"}
-                </button>}
+                <React.Fragment>
+                    <button className="end-game--btn" 
+                        onClick={newGame ?
+                        resetGame : 
+                        checkAnswers}
+                    >
+                        {newGame ? "Play again" : "Check answers"}
+                    </button>
+                    <button className="show-menu--btn" onClick={changeStart}>Menu</button>
+                </React.Fragment>    
+            }
         </form>
     )
 }
