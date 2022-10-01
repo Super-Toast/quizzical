@@ -8,19 +8,19 @@ export default function Game() {
     const [questions, setQuestions] = React.useState([])
     const [formData, setFormData] = React.useState({})
     const [newGame, setNewGame] = React.useState(false)
+    const [responseCode, setResponseCode] = React.useState(0)
     
     function getQuestions() {
         fetch(api)
             .then(response => response.json())
             .then(data => {
+                setResponseCode(data.response_code)
                 data = decodeHTMLEntities(data)
                 setQuestions(data.results)
             })
     }
     
-    React.useEffect(() => {
-        getQuestions()
-    }, [])
+    React.useEffect(getQuestions, [])
     
     React.useEffect(() => {
         if(questions.length > 0) {
@@ -154,28 +154,33 @@ export default function Game() {
     }
             
     return (
-        <form className="game-container">
-            {questionsElements}
-            {showMsg && (showStats ?
-                <p className="end-msg">
-                    You scored {correctAnswersNum}/{questions.length} correct answers
-                </p> :
-                <p className="end-msg end-msg-warning">
-                    Please complete all questions!
-                </p>)
-            }
-            {questions.length > 0 &&
-                <React.Fragment>
-                    <button className="end-game--btn" 
-                        onClick={newGame ?
-                        resetGame : 
-                        checkAnswers}
-                    >
-                        {newGame ? "Play again" : "Check answers"}
-                    </button>
-                    <button className="show-menu--btn" onClick={changeStart}>Menu</button>
-                </React.Fragment>    
-            }
-        </form>
+        responseCode === 0 ?
+            <form className="game-container">
+                {questionsElements}
+                {showMsg && (showStats ?
+                    <p className="end-msg">
+                        You scored {correctAnswersNum}/{questions.length} correct answers
+                    </p> :
+                    <p className="end-msg end-msg-warning">
+                        Please complete all questions!
+                    </p>)
+                }
+                {questions.length > 0 &&
+                    <React.Fragment>
+                        <button className="end-game--btn" 
+                            onClick={newGame ?
+                            resetGame : 
+                            checkAnswers}
+                        >
+                            {newGame ? "Play again" : "Check answers"}
+                        </button>
+                        <button className="show-menu--btn" onClick={changeStart}>Main menu</button>
+                    </React.Fragment>    
+                }
+            </form> :
+            <div className="game-error-msg-container">
+                <p className="error-msg">An error occurred. Please try again and if the error persists try changing the game parameters.</p>
+                <button className="show-menu--btn" onClick={changeStart}>Main menu</button>
+            </div> 
     )
 }

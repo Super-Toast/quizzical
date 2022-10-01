@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import apiCategoriesData from "../apiData"
 import { Context } from "../Context"
 
-export default function StartScreen(props) {
+export default function StartScreen() {
     const {changeApi, changeStart} = React.useContext(Context)
 
     const [apiForm, setApiForm] = useState({amount: "10", category: "8", difficulty: "any", type: "any"})
