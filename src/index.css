@@ -52,6 +52,10 @@ button:focus {
   margin-top: 1em;
 }
 
+.end-game--btn {
+  margin-top: 1.25em;
+}
+
 /* Start screen */
 
 .start-screen {
@@ -59,8 +63,8 @@ button:focus {
   flex-direction: column;
   align-content: center;
   justify-content: center;
-  height: 100vh;
-  padding: 2 .75em;
+  min-height: 100vh;
+  padding: 2em .75em;
   background: #e6f0f7;
   position: relative;
   overflow: hidden;
@@ -95,15 +99,15 @@ button:focus {
 .start-screen--form {
   z-index: 2;
   display: grid;
-  grid-template-columns: repeat(2, auto);
-  gap: 1em;
+  grid-template-columns: 1fr;
+  gap: .75em;
   margin-bottom: 2em;
   justify-content: center;
   align-items: center;
 }
 
 .start-screen--form-label {
-  text-align: right;
+  text-align: left;
 }
 
 .start-screen--form-select {
@@ -111,6 +115,7 @@ button:focus {
   border: none;
   border-radius: .5em;
   padding: .75em 1em;
+  margin-bottom: 1.25em;
   width: auto;
   background-color: #fff;
 }
@@ -229,10 +234,6 @@ input[type = "radio"] {
   color: red;
 }
 
-.end-game--btn {
-  margin-top: 1.25em;
-}
-
 .game-error-msg-container {
   display: flex;
   flex-direction: column;
@@ -246,9 +247,24 @@ input[type = "radio"] {
   text-align: center;
 }
 
-/* Media query */
+/* Media queries */
 
-@media (min-width: 800px) {
+@media (min-width: 450px) {
+  .start-screen--form {
+    grid-template-columns: repeat(2, auto);
+    gap: 1em;
+  }
+
+  .start-screen--form-label {
+    text-align: right;
+  }
+
+  .start-screen--form-select {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 850px) {
   .start-screen--form {
     grid-template-columns: repeat(4, auto);
   }
